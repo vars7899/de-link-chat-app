@@ -1,6 +1,9 @@
 const express = require("express");
 const colors = require("colors");
+const dbConnect = require("./db.js");
 require("dotenv").config();
+
+dbConnect();
 const app = express();
 
 app.get("/", (req, res) => {

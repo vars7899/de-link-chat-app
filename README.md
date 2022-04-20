@@ -15,6 +15,9 @@ Code and documents to create real-time chat application using the following stac
 
 - colors <https://www.npmjs.com/package/colors>
 - nodemon <https://www.npmjs.com/package/nodemon>
+- mongoose <https://www.npmjs.com/package/mongoose>
+- chakra <https://chakra-ui.com/>
+- framer-motion <https://www.framer.com/motion/>
 
 ---
 
