@@ -11,6 +11,11 @@ Code and documents to create real-time chat application using the following stac
 - NodeJS (JavaScript Runtime)
 - React (Frontend framework)
 
+#### Other dependencies
+
+- colors <https://www.npmjs.com/package/colors>
+- nodemon <https://www.npmjs.com/package/nodemon>
+
 ---
 
 ## Contributors
