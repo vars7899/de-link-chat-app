@@ -5,6 +5,7 @@ require("dotenv").config();
 const { errorHandler, routeNotFound } = require("./middleware/errorMiddleware");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 
 dbConnect();
 const app = express();
@@ -16,9 +17,10 @@ app.get("/", (req, res) => {
     message: "Hello from DE-Link Chat App server",
   });
 });
-
+// Main routes
 app.use("/api/users", userRoutes);
 app.use("/api/chats", chatRoutes);
+app.use("/api/message", messageRoutes);
 // Error handling routes
 app.use(routeNotFound);
 app.use(errorHandler);
