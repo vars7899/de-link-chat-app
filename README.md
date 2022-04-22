@@ -18,6 +18,12 @@ Code and documents to create real-time chat application using the following stac
 - mongoose <https://www.npmjs.com/package/mongoose>
 - chakra <https://chakra-ui.com/>
 - framer-motion <https://www.framer.com/motion/>
+- react-router-dom <https://www.npmjs.com/package/react-router-dom>
+- react-toastify <https://www.npmjs.com/package/react-toastify>
+- express-async-handler <https://www.npmjs.com/package/express-async-handler>
+- jsonwebtoken <https://www.npmjs.com/package/jsonwebtoken>
+- bcrypt <https://www.npmjs.com/package/bcrypt>
+- react-icons <https://react-icons.github.io/react-icons/icons?name=io5>
 
 ---
 
