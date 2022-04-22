@@ -24,6 +24,7 @@ Code and documents to create real-time chat application using the following stac
 - jsonwebtoken <https://www.npmjs.com/package/jsonwebtoken>
 - bcrypt <https://www.npmjs.com/package/bcrypt>
 - react-icons <https://react-icons.github.io/react-icons/icons?name=io5>
+- react-scrollable-feed <https://www.npmjs.com/package/react-scrollable-feed>
 
 ---
 

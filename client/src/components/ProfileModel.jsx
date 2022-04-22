@@ -50,7 +50,6 @@ const ProfileModel = ({ user, children }) => {
             bg="whiteAlpha.500"
             p="20px 0"
           >
-            {console.log(user)}
             <Image boxSize="150px" src={user.image} alt={user.name} />
             <Text mt="2rem" fontSize={{ base: "1rem", md: "1.25rem" }}>
               Email: {user.email}

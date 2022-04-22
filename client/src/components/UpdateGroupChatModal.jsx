@@ -27,7 +27,11 @@ import axios from "axios";
 import Loader from "./Loader";
 import UserListItem from "./UserListItem";
 
-const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
+const UpdateGroupChatModal = ({
+  fetchAgain,
+  setFetchAgain,
+  fetchAllMessages,
+}) => {
   const [groupChatName, setGroupChatName] = useState();
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -62,6 +66,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
         ? setSelectedChat()
         : setSelectedChat(data);
       setFetchAgain(!fetchAgain);
+      fetchAllMessages();
       setLoading(false);
     } catch (err) {
       toast.error(err);
@@ -171,6 +176,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
       );
       setSelectedChat();
       setFetchAgain(!fetchAgain);
+      fetchAllMessages();
       setLoading(false);
     } catch (err) {
       toast.error(err);

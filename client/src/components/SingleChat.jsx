@@ -1,13 +1,82 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ChatState } from "../context/ChatProvider";
-import { Box, Text, Heading, Divider } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Heading,
+  Divider,
+  FormControl,
+  Input,
+} from "@chakra-ui/react";
 import { IoIosArrowBack } from "react-icons/io";
 import { getSender } from "../config/ChatLogics";
 import ProfileModel from "./ProfileModel";
 import UpdateGroupChatModal from "./UpdateGroupChatModal";
+import Loader from "./Loader";
+import { toast } from "react-toastify";
+import axios from "axios";
+import ScrollableChat from "./ScrollableChat";
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const { user, selectedChat, setSelectedChat } = ChatState();
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const fetchAllMessages = async () => {
+    if (!selectedChat) return;
+    try {
+      setLoading(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.get(
+        `/api/message/${selectedChat._id}`,
+        config
+      );
+      console.log(data);
+      setMessages(data);
+      setLoading(false);
+    } catch (err) {
+      toast.error(err);
+      setLoading(false);
+      return;
+    }
+  };
+
+  const sendMessage = async (e) => {
+    if (e.key === "Enter" && newMessage) {
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        setNewMessage("");
+        const { data } = await axios.post(
+          "/api/message",
+          {
+            chatId: selectedChat._id,
+            content: newMessage,
+          },
+          config
+        );
+        setMessages([...messages, data]);
+      } catch (err) {
+        toast.error(err);
+        return;
+      }
+    }
+  };
+  const typingHandler = (e) => {
+    setNewMessage(e.target.value);
+  };
+  useEffect(() => {
+    fetchAllMessages(); // eslint-disable-next-line
+  }, [selectedChat]);
   return (
     <>
       {selectedChat ? (
@@ -40,6 +109,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 <UpdateGroupChatModal
                   fetchAgain={fetchAgain}
                   setFetchAgain={setFetchAgain}
+                  fetchAllMessages={fetchAllMessages}
                 />
               </>
             )}
@@ -52,8 +122,25 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             h="100%"
             overflowY="hidden"
           >
-            {/* Message here */}
+            {loading ? (
+              <Loader />
+            ) : (
+              <div className="message">
+                {<ScrollableChat messages={messages} />}
+              </div>
+            )}
           </Box>
+          <FormControl onKeyDown={sendMessage} isRequired mt="3">
+            <Input
+              variant="filled"
+              bg="#fff"
+              h="4rem"
+              color="#fff"
+              placeholder="Enter a message..."
+              onChange={typingHandler}
+              value={newMessage}
+            />
+          </FormControl>
         </>
       ) : (
         <Box

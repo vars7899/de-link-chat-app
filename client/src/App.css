@@ -33,3 +33,9 @@
 ::-webkit-slider-thumb:hover {
   background: #1d1931;
 }
+.message {
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: none;
+  overflow-y: scroll;
+}
