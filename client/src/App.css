@@ -35,7 +35,9 @@
 }
 .message {
   display: flex;
+  /* height: 100%; */
   flex-direction: column;
   scrollbar-width: none;
   overflow-y: scroll;
+  width: 100%;
 }
