@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { valid } from "../Util/valid";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Loader from "./Loader";
 
 const Register = () => {
   const [show, setShow] = useState(false);
@@ -90,6 +91,9 @@ const Register = () => {
       return;
     }
   };
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <VStack spacing="30px">
       <FormControl id="name" isRequired>

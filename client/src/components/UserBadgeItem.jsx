@@ -1,5 +1,5 @@
 import React from "react";
-import { Tag, Avatar, TagLabel } from "@chakra-ui/react";
+import { Tag, TagLabel } from "@chakra-ui/react";
 import { IoMdClose } from "react-icons/io";
 
 const UserBadgeItem = ({ user, handleFunction }) => {

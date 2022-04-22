@@ -33,7 +33,7 @@ const SideDrawer = () => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [loadingChat, setLoadingChat] = useState();
+  const [loadingChat, setLoadingChat] = useState(false);
   const { user, setSelectedChat, chats, setChats } = ChatState();
 
   const logoutHandler = () => {
@@ -63,6 +63,7 @@ const SideDrawer = () => {
 
   const accessChat = async (userId) => {
     setLoading(true);
+    setLoadingChat(true);
     try {
       const config = {
         headers: {
@@ -76,6 +77,7 @@ const SideDrawer = () => {
 
       setSelectedChat(data);
       setLoading(false);
+      setLoadingChat(false);
       onClose();
     } catch (err) {
       toast.error(err);

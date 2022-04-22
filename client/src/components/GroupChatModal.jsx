@@ -73,8 +73,8 @@ const GroupChatModal = ({ children }) => {
       selectedUser.map((u) => {
         if (u.email === "guest@deLink.com") {
           toast.info("Guest user can not be added in group");
-          return;
         }
+        return {};
       })
     )
       if (!groupChatName || !selectedUser) {
@@ -183,7 +183,7 @@ const GroupChatModal = ({ children }) => {
               mr={3}
               onClick={handleSubmit}
               rightIcon={<IoIosArrowForward />}
-              isLoading={loading}
+              isLoading={submitLoading}
             >
               Create
             </Button>
