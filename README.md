@@ -18,6 +18,12 @@
 
 ## ![ScreenShot](./screenshots/1.png)
 
+## ![ScreenShot](./screenshots/2.png)
+
+## ![ScreenShot](./screenshots/3.png)
+
+---
+
 **Version 1.0.0**
 
 Code and documents to create real-time chat application using the following stack
@@ -47,36 +53,7 @@ Code and documents to create real-time chat application using the following stac
 
 #### File structure
 
-server
-│ db.js
-│ server.js
-│ token.js
-│
-├───controllers
-│ chatControllers.js
-│ messageControllers.js
-│ notificationController.js
-│ userControllers.js
-│
-├───middleware
-│ authMiddleware.js
-│ errorMiddleware.js
-│
-├───models
-│ chat.js
-│ message.js
-│ notification.js
-│ user.js
-│
-└───routes
-chatRoutes.js
-messageRoutes.js
-notificationRoutes.js
-userRoutes.js
-
 client
-|───────────node_modules
-|───────────public
 |───────────src
 │ App.css
 │ App.js
@@ -111,6 +88,34 @@ client
 │
 └───Util
 valid.js
+|────────node_modules
+|────────public
+server
+│ db.js
+│ server.js
+│ token.js
+│
+├───controllers
+│ chatControllers.js
+│ messageControllers.js
+│ notificationController.js
+│ userControllers.js
+│
+├───middleware
+│ authMiddleware.js
+│ errorMiddleware.js
+│
+├───models
+│ chat.js
+│ message.js
+│ notification.js
+│ user.js
+│
+└───routes
+chatRoutes.js
+messageRoutes.js
+notificationRoutes.js
+userRoutes.js
 
 ---
 
