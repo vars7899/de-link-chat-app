@@ -54,7 +54,7 @@ const Login = () => {
       setLoading(false);
       navigate("/chats");
     } catch (err) {
-      toast.error(err);
+      toast.error("Login Failed: Either the email or password is incorrect");
       setLoading(false);
       return;
     }
