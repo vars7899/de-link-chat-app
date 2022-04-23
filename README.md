@@ -1,6 +1,22 @@
-### Create CHAT APP using MERN stack 🤠
+### CHAT APP using MERN stack 🤠
 
 ---
+
+### Features
+
+- Authentication
+- Real-time chat
+- Real-time Notification
+- Typing indicator
+- Guest login
+- Group chat
+- One-on-one chat
+
+---
+
+#### Demo
+
+## ![ScreenShot](./screenshots/1.png)
 
 **Version 1.0.0**
 
@@ -26,6 +42,75 @@ Code and documents to create real-time chat application using the following stac
 - bcrypt <https://www.npmjs.com/package/bcrypt>
 - react-icons <https://react-icons.github.io/react-icons/icons?name=io5>
 - react-scrollable-feed <https://www.npmjs.com/package/react-scrollable-feed>
+
+---
+
+#### File structure
+
+server
+│ db.js
+│ server.js
+│ token.js
+│
+├───controllers
+│ chatControllers.js
+│ messageControllers.js
+│ notificationController.js
+│ userControllers.js
+│
+├───middleware
+│ authMiddleware.js
+│ errorMiddleware.js
+│
+├───models
+│ chat.js
+│ message.js
+│ notification.js
+│ user.js
+│
+└───routes
+chatRoutes.js
+messageRoutes.js
+notificationRoutes.js
+userRoutes.js
+
+client
+|───────────node_modules
+|───────────public
+|───────────src
+│ App.css
+│ App.js
+│ index.css
+│ index.js
+│
+├───components
+│ ChatBox.jsx
+│ GroupChatModal.jsx
+│ Loader.jsx
+│ Login.jsx
+│ MyChats.jsx
+│ ProfileModel.jsx
+│ Register.jsx
+│ ScrollableChat.jsx
+│ SideDrawer.jsx
+│ SingleChat.jsx
+│ UpdateGroupChatModal.jsx
+│ UserBadgeItem.jsx
+│ UserListItem.jsx
+│
+├───config
+│ ChatLogics.js
+│
+├───context
+│ ChatProvider.js
+│
+├───pages
+│ ChatPage.js
+│ FourOFour.js
+│ HomePage.js
+│
+└───Util
+valid.js
 
 ---
 
