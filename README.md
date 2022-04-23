@@ -10,6 +10,7 @@ Code and documents to create real-time chat application using the following stac
 - ExpressJS (Web application framework)
 - NodeJS (JavaScript Runtime)
 - React (Frontend framework)
+- Socket.io (web sockets for real time chat)
 
 #### Other dependencies
 

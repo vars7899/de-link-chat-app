@@ -16,12 +16,20 @@ import Loader from "./Loader";
 import { toast } from "react-toastify";
 import axios from "axios";
 import ScrollableChat from "./ScrollableChat";
+// for socket.io
+import io from "socket.io-client";
+const ENDPOINT = "http://localhost:5000";
+var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
-  const { user, selectedChat, setSelectedChat } = ChatState();
+  const { user, selectedChat, setSelectedChat, notification, setNotification } =
+    ChatState();
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
+  const [newMessage, setNewMessage] = useState();
   const [loading, setLoading] = useState(false);
+  const [socketConnected, setSocketConnected] = useState(false);
+  const [typing, setTyping] = useState();
+  const [isTyping, setIsTyping] = useState();
 
   const fetchAllMessages = async () => {
     if (!selectedChat) return;
@@ -36,9 +44,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         `/api/message/${selectedChat._id}`,
         config
       );
-      console.log(data);
       setMessages(data);
       setLoading(false);
+      socket.emit("join chat", selectedChat._id);
     } catch (err) {
       toast.error(err);
       setLoading(false);
@@ -48,6 +56,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const sendMessage = async (e) => {
     if (e.key === "Enter" && newMessage) {
+      socket.emit("stop typing", selectedChat._id);
       try {
         const config = {
           headers: {
@@ -56,6 +65,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           },
         };
         setNewMessage("");
+        console.log(selectedChat);
         const { data } = await axios.post(
           "/api/message",
           {
@@ -64,6 +74,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           },
           config
         );
+        socket.emit("new message", data);
+        console.log(messages);
         setMessages([...messages, data]);
       } catch (err) {
         toast.error(err);
@@ -71,19 +83,62 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       }
     }
   };
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user.user);
+    socket.on("connected", () => setSocketConnected(true));
+    socket.on("typing", () => setIsTyping(true));
+    socket.on("stop typing", () => setIsTyping(false));
+  }, []);
+
+  useEffect(() => {
+    fetchAllMessages();
+    selectedChatCompare = selectedChat;
+  }, [selectedChat]);
+
+  console.log(notification);
+  useEffect(() => {
+    socket.on("message received", (newMessageReceived) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessageReceived.chatId._id
+      ) {
+        if (!notification.includes()) {
+          setNotification([newMessageReceived, ...notification]);
+          setFetchAgain(!fetchAgain);
+        }
+      } else {
+        setMessages([...messages, newMessageReceived]);
+      }
+    });
+  });
+
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
+    if (!socketConnected) return;
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", selectedChat._id);
+    }
+    let lastTypingTime = new Date().getTime();
+    var timerLength = 3000;
+    setTimeout(() => {
+      var timeNow = new Date().getTime();
+      var timeDiff = timeNow - lastTypingTime;
+      if (timeDiff >= timerLength && typing) {
+        socket.emit("stop typing", selectedChat._id);
+        setTyping(false);
+      }
+    }, timerLength);
   };
-  useEffect(() => {
-    fetchAllMessages(); // eslint-disable-next-line
-  }, [selectedChat]);
+
   return (
     <>
       {selectedChat ? (
         <>
-          <Text
-            fontSize={{ base: "1.5rem", md: "1.75rem" }}
-            py="3"
+          <Box
+            py="3.0"
             px="4"
             w="100%"
             d="flex"
@@ -94,15 +149,30 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           >
             <Box
               d={{ base: "flex", md: "none" }}
+              mr="5"
               onClick={() => setSelectedChat("")}
             >
               <IoIosArrowBack />
             </Box>
             {!selectedChat.isGroupChat ? (
-              <>
-                {getSender(user.user, selectedChat.users).name}
+              <Text
+                width="100%"
+                d="flex"
+                py="3"
+                alignItems="center"
+                justifyContent={{ base: "space-between" }}
+                fontSize={{ base: "1.5rem", md: "1.75rem" }}
+              >
+                <Box display="flex" flexDir="column" alignItems="flex-start">
+                  {getSender(user.user, selectedChat.users).name}
+
+                  <Box minH="10px">
+                    {isTyping && <Text fontSize="8px">Typing...</Text>}
+                  </Box>
+                </Box>
+
                 <ProfileModel user={getSender(user.user, selectedChat.users)} />
-              </>
+              </Text>
             ) : (
               <>
                 {selectedChat.chatName.toUpperCase()}
@@ -113,7 +183,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 />
               </>
             )}
-          </Text>
+          </Box>
           <Box
             d="flex"
             flexDir="column"

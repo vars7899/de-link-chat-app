@@ -64,6 +64,7 @@ const MyChats = ({ fetchAgain }) => {
                 <IoMdAdd />
               </div>
             }
+            zIndex="0"
             colorScheme={"blackAlpha"}
             bg={"#1d1931"}
           >

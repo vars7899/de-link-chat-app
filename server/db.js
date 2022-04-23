@@ -9,11 +9,11 @@ const dbConnect = async () => {
     });
     console.log(
       colors.brightMagenta(
-        `\nDB connected: ${connectionString.connection.host}`
+        `\nDB connected: ${connectionString.connection.host}\n`
       )
     );
   } catch (error) {
-    console.log(colors.brightRed("\nConnection to link DB failed"));
+    console.log(colors.brightRed("\nConnection to link DB failed\n"));
   }
 };
 

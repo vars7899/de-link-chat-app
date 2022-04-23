@@ -6,7 +6,7 @@ const { errorHandler, routeNotFound } = require("./middleware/errorMiddleware");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
-
+// const notificationRoutes = require("./controllers/");
 dbConnect();
 const app = express();
 app.use(express.json());
@@ -21,13 +21,54 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRoutes);
 app.use("/api/chats", chatRoutes);
 app.use("/api/message", messageRoutes);
+app.use("/api/notification", notificationRoutes);
 // Error handling routes
 app.use(routeNotFound);
 app.use(errorHandler);
 
-app.listen(process.env.SERVER_PORT, () => {
+const server = app.listen(process.env.SERVER_PORT, () => {
   console.log(
     colors.brightMagenta(`\nServer is UP on PORT ${process.env.SERVER_PORT}`)
   );
   console.log(`Visit  ` + colors.underline.blue(`localhost:${5000}`));
+});
+
+const io = require("socket.io")(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("Sockets are in action");
+  socket.on("setup", (userData) => {
+    socket.join(userData._id);
+    console.log(userData.name, "connected");
+    socket.emit("connected");
+  });
+  socket.on("join chat", (room) => {
+    socket.join(room);
+    console.log("User joined room: " + room);
+  });
+  socket.on("new message", (newMessage) => {
+    var chat = newMessage.chatId;
+    if (!chat.users) return console.log("chat.users not defined");
+
+    chat.users.forEach((user) => {
+      console.log(newMessage);
+      if (user === newMessage.sender._id) return;
+      socket.in(user).emit("message received", newMessage);
+    });
+    socket.on("typing", (room) => {
+      socket.in(room).emit("typing");
+    });
+    socket.on("stop typing", (room) => {
+      socket.in(room).emit("stop typing");
+    });
+  });
+  socket.off("setup", () => {
+    console.log("USER DISCONNECTED");
+    socket.leave(userData._id);
+  });
 });

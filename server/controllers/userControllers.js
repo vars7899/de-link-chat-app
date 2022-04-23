@@ -52,7 +52,7 @@ const loginUser = asyncHandler(async (req, res) => {
   try {
     const { email, password } = req.body;
     const userExist = await User.findOne({ email });
-
+    console.log(req.body);
     if (userExist && (await userExist.matchPassword(password))) {
       res.status(200).json({
         user: userExist,
@@ -65,7 +65,7 @@ const loginUser = asyncHandler(async (req, res) => {
     }
   } catch (err) {
     res.status(500);
-    throw new Error("Server could not process the request");
+    throw new Error(err);
   }
 });
 
