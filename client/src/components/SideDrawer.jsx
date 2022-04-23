@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProfileModel from "./ProfileModel";
 import UserListItem from "./UserListItem";
 import Loader from "./Loader";
@@ -93,6 +93,34 @@ const SideDrawer = () => {
     }
   };
 
+  const removeNotification = async (id) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      await axios.delete(`/api/notification/${id}`, config);
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+  const getPrevNotification = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.get("/api/notification", config);
+      setNotification(data.map((item) => item.notificationId));
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+  useEffect(() => {
+    getPrevNotification();
+  }, []);
   return (
     <>
       <Box
@@ -136,13 +164,15 @@ const SideDrawer = () => {
                   key={notify._id}
                   cursor="pointer"
                   onClick={() => {
+                    removeNotification(notify.chatId._id);
+                    console.log(notify);
                     setSelectedChat(notify.chatId);
                     setNotification(notification.filter((n) => n !== notify));
                   }}
                 >
                   {notify.chatId.isGroupChat
                     ? `New Message in ${notify.chatId.chatName}`
-                    : `New Message`}
+                    : `New Message from ${notify.sender.name}`}
                 </MenuItem>
               ))}
             </MenuList>

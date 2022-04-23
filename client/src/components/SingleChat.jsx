@@ -84,6 +84,28 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
   };
 
+  const saveNotification = async () => {
+    if (!notification.length) return;
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      console.log(notification[0].chatId.latestMessage);
+      await axios.post(
+        "/api/notification",
+        {
+          notification: notification[0].chatId.latestMessage,
+        },
+        config
+      );
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
   useEffect(() => {
     socket = io(ENDPOINT);
     socket.emit("setup", user.user);
@@ -113,7 +135,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       }
     });
   });
-
+  useEffect(() => {
+    saveNotification();
+  }, [notification]);
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
     if (!socketConnected) return;

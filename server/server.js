@@ -6,7 +6,8 @@ const { errorHandler, routeNotFound } = require("./middleware/errorMiddleware");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
-// const notificationRoutes = require("./controllers/");
+const notificationRoutes = require("./routes/notificationRoutes");
+
 dbConnect();
 const app = express();
 app.use(express.json());
@@ -56,9 +57,8 @@ io.on("connection", (socket) => {
     if (!chat.users) return console.log("chat.users not defined");
 
     chat.users.forEach((user) => {
-      console.log(newMessage);
-      if (user === newMessage.sender._id) return;
-      socket.in(user).emit("message received", newMessage);
+      if (user._id === newMessage.sender._id) return;
+      socket.in(user._id).emit("message received", newMessage);
     });
     socket.on("typing", (room) => {
       socket.in(room).emit("typing");
