@@ -36,7 +36,7 @@ const Register = () => {
       toast.warn("Please add a Profile Picture");
       return;
     }
-    if (pics.type === "image/jpg" || pics.type === "image/png") {
+    if (pics.type === "image/png") {
       const data = new FormData();
       data.append("file", pics);
       data.append("upload_preset", "DELinkChatApp");
@@ -55,7 +55,7 @@ const Register = () => {
           setUploadingImage(false);
         });
     } else {
-      toast.error("Invalid format of Image\n Only .png and .jpg/jpeg accepted");
+      toast.error("Invalid format of Image\n Only .png accepted");
       setUploadingImage(false);
       return;
     }

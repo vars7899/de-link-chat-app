@@ -83,7 +83,12 @@ const Login = () => {
             value={password}
           />
           <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="xs" onClick={handleClick}>
+            <Button
+              h="1.75rem"
+              size="xs"
+              onClick={handleClick}
+              isDisabled={email === "guest@deLink.com"}
+            >
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
