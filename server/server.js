@@ -42,7 +42,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(routeNotFound);
 app.use(errorHandler);
 
-const server = app.listen(process.env.SERVER_PORT, () => {
+const server = app.listen(process.env.PORT || 5000, () => {
   console.log(
     colors.brightMagenta(`\nServer is UP on PORT ${process.env.SERVER_PORT}`)
   );

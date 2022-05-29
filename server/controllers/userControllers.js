@@ -8,7 +8,6 @@ const bcrypt = require("bcrypt");
 // @access		Public
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, pic } = req.body;
-  console.log(req.body);
   //   ? check for missing fields
   if (!name || !email || !password) {
     res.status(400);
@@ -52,7 +51,7 @@ const loginUser = asyncHandler(async (req, res) => {
   try {
     const { email, password } = req.body;
     const userExist = await User.findOne({ email });
-    console.log(req.body);
+
     if (userExist && (await userExist.matchPassword(password))) {
       res.status(200).json({
         user: userExist,
@@ -85,7 +84,6 @@ const allUsers = asyncHandler(async (req, res) => {
     const allUserData = await User.find(keyword).find({
       _id: { $ne: req.user._id },
     });
-    console.log(allUserData);
     if (allUserData.length === 0) {
       res.status(200).json({
         message: "No user Exist",
