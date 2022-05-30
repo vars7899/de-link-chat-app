@@ -229,8 +229,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             borderRadius="8px"
           >
             <Input
-              variant="filled"
-              bg="transparent"
+              variant="outline"
+              bg="#1d1931"
               h="4rem"
               color="#fff"
               placeholder="Enter a message..."
