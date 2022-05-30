@@ -45,17 +45,17 @@
 
 ### Search User
 
-## ![Gif](./screenshots/9.gif.gif)
+## ![Gif](./screenshots/9.gif)
 
 ### Your profile
 
-## ![Gif](./screenshots/10.gif.gif)
+## ![Gif](./screenshots/10.gif)
 
 ### Create Group
 
-## ![Gif](./screenshots/11.gif.gif)
+## ![Gif](./screenshots/11.gif)
 
-## ![Gif](./screenshots/12.gif.gif)
+## ![Gif](./screenshots/12.gif)
 
 ---
 
