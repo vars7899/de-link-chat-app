@@ -1,4 +1,4 @@
-### CHAT APP using MERN stack 🤠
+## CHAT APP using MERN stack and SOCKET.IO 🤠
 
 ---
 
@@ -11,6 +11,7 @@
 - Guest login
 - Group chat
 - One-on-one chat
+- Responsive
 
 ---
 
@@ -21,6 +22,40 @@
 ## ![ScreenShot](./screenshots/2.png)
 
 ## ![ScreenShot](./screenshots/3.png)
+
+### Guest User
+
+## ![Gif](./screenshots/4.gif)
+
+### User Signup
+
+## ![Gif](./screenshots/5.gif)
+
+### Search User
+
+## ![Gif](./screenshots/6.gif)
+
+### View Profile
+
+## ![Gif](./screenshots/7.gif)
+
+### Guest User
+
+## ![Gif](./screenshots/8.gif)
+
+### Search User
+
+## ![Gif](./screenshots/9.gif.gif)
+
+### Your profile
+
+## ![Gif](./screenshots/10.gif.gif)
+
+### Create Group
+
+## ![Gif](./screenshots/11.gif.gif)
+
+## ![Gif](./screenshots/12.gif.gif)
 
 ---
 

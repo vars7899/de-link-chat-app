@@ -203,6 +203,7 @@ const SideDrawer = () => {
         </div>
       </Box>
       <Drawer
+        size="sm"
         placement="left"
         isOpen={isOpen}
         onClose={onClose}
