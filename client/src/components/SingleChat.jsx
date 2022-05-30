@@ -210,7 +210,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             flexDir="column"
             p="3"
             w="100%"
-            h="100%"
+            h={{ base: "73vh", md: "100%" }}
             overflowY="hidden"
           >
             {loading ? (
@@ -221,10 +221,16 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               </div>
             )}
           </Box>
-          <FormControl onKeyDown={sendMessage} isRequired mt="3">
+          <FormControl
+            onKeyDown={sendMessage}
+            isRequired
+            mt={{ base: "1", md: "3" }}
+            border="1px solid #fff"
+            borderRadius="8px"
+          >
             <Input
               variant="filled"
-              bg="#fff"
+              bg="transparent"
               h="4rem"
               color="#fff"
               placeholder="Enter a message..."
