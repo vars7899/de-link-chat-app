@@ -18,7 +18,7 @@ import axios from "axios";
 import ScrollableChat from "./ScrollableChat";
 // for socket.io
 import io from "socket.io-client";
-const ENDPOINT = "https://vars-chat-app.herokuapp.com/";
+const ENDPOINT = "https://react-chat-vars.herokuapp.com";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -65,7 +65,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           },
         };
         setNewMessage("");
-        console.log(selectedChat);
         const { data } = await axios.post(
           "/api/message",
           {
@@ -75,7 +74,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           config
         );
         socket.emit("new message", data);
-        console.log(messages);
         setMessages([...messages, data]);
       } catch (err) {
         toast.error(err);
@@ -93,7 +91,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      console.log(notification[0].chatId.latestMessage);
       await axios.post(
         "/api/notification",
         {
